@@ -19,3 +19,5 @@ pip3 install -r requirements.txt
 ```shell script
 python3 markowitz.py
 ```
+
+![Example plot](example-plot.png?raw=true "Example plot")
