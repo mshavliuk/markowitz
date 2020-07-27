@@ -134,7 +134,8 @@ def show_data(data):
 
 
 def calculate_returns(data):
-    changes = data / data.shift(1)
+    filtred = data.dropna()
+    changes = filtred / filtred.shift(1)
 
     returns = np.log(changes)
     return returns
@@ -172,7 +173,7 @@ def generate_portfolios(returns):
     pweights = []
 
     for i in range(10_000):
-        weights = initialize_weights(len(returns))
+        weights = initialize_weights(len(returns.columns))
         preturns.append(calculate_portfolio_return(returns, weights))
         pvariances.append(calculate_portfolio_variance(returns, weights))
         pweights.append(weights)
@@ -225,13 +226,13 @@ def print_optimal_portfolio(optimum, returns):
 
 
 def show_optimal_portfolio(optimum, returns, preturns, pvariances):
-    plt.figure()
+    plt.figure(dpi=300)
     plt.scatter(pvariances, preturns, c=preturns / pvariances, marker='o')
     plt.grid(True)
     plt.xlabel('Expected Volatility')
     plt.ylabel('Expected Return')
     plt.colorbar(label='Sharpe Ratio')
-    expectations = statistics(optimum['x'].round(3), returns)
+    expectations = statistics(optimum.round(3), returns)
     plt.plot(expectations[1], expectations[0], 'g*', markersize=20.0)
     plt.show()
 
@@ -260,13 +261,13 @@ if __name__ == '__main__':
     returns = calculate_returns(data)
     # plot_daily_returns(returns)
     show_statistics(returns)
-    # preturns, pvariances, pweights = generate_portfolios(returns)
+    preturns, pvariances, pweights = generate_portfolios(returns)
     # plot_portfolios(preturns, pvariances)
     weights = initialize_weights(len(data.columns))
     # for w in np.arange(0.1, 1, 0.1):
     #     optimum = optimize_portfolio(weights, returns, w)
     #     print_optimal_portfolio(optimum, returns)
 
-    optimum = optimize_portfolio(weights, returns, 0)
+    optimum = optimize_portfolio(weights, returns, 0.3)
     print_optimal_portfolio(optimum, returns)
-    # show_optimal_portfolio(optimum, returns, preturns, pvariances)
+    show_optimal_portfolio(optimum, returns, preturns, pvariances)
