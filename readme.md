@@ -1,0 +1,1 @@
+Current program allows to estimate the [Sharp ratio](https://www.investopedia.com/terms/s/sharperatio.asp) for the given stocks by using the [Markowitz algorithm](https://www.researchgate.net/publication/257864883_Fast_algorithm_for_the_Markowitz_critical_line_method#:~:text=The%20critical%20line%20method%20developed,variance)%20and%20finding%20minimum%20portfolios.)
