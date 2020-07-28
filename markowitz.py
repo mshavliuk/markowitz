@@ -134,8 +134,8 @@ def show_data(data):
 
 
 def calculate_returns(data):
-    filtred = data.dropna()
-    changes = filtred / filtred.shift(1)
+    filtred = data.dropna(how='all')
+    changes = filtred.pct_change() + 1
 
     returns = np.log(changes)
     return returns
